@@ -47,10 +47,10 @@ For each [goal](#goals) there is probably a [constraint](#constraints) or two on
 
 ```mermaid
 flowchart LR
-  A[Hard] -->|Text| B(Round);
-  B --> C{Decision};
-  C -->|One| D[Result 1];
-  C -->|Two| E[Result 2];
+  A[Sharp Corner Box] -->|Arrow Text| B(Rounded Box);
+  B --> C{Decision Diamond};
+  C -->|Option 1| D[Result 1];
+  C -->|Option 2| E[Result 2];
 ```
 
 ## Metrics
