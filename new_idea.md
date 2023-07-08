@@ -1,7 +1,7 @@
 ---
-title: Title
 author: eipiguy
 project: planning
+title: Title
 tags: [log, readme, template]
 ---
 
