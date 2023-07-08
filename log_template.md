@@ -21,16 +21,20 @@ What's the point? What are you trying to achieve?
 
 ## Goals
 
-Start with big concepts and break them down into progressively smaller bits until you have things that seem manageable. This is an evolving list. It will change based on obstacles and requirements, and will grow and shrink as tasks are completed, added, and learning makes bigger tasks easier.
+Start with [big concepts](#summary) and [break them down](#influences) into [progressively smaller bits](#distinctions) until you have [things that seem manageable](#goals).
+
+This is an evolving list. It will change based on obstacles and requirements that arise, and will grow and shrink as tasks are completed, added, and learning makes bigger tasks easier.
 
 - [ ] Main thing to do
   - [ ] There are always parts to it
   - [ ] More than one thing makes a list
 - [ ] Make a follow up task
 
+> Tasks age like milk, not like wine. Only plan what is necessary. "Pie in the sky" ideas go in separate documents.
+
 ## Constraints
 
-For each [goal](#goals) there is probably a [constraint](#constraints) or two on it. Make another list of these so you know what you have to work with
+For each [goal](#goals) there is probably a [constraint](#constraints) or two on it. Make another list of these so you know what you have to work with.
 
 - Main thing to be aware of
   - There are always pieces to it
@@ -55,15 +59,15 @@ How do you know if you're accomplishing your [goals](#goals)? What [tests](#test
 
 ## Testing
 
-How do we run tests? How do we interpret failures and file an item?
+How do we run [tests](#testing)? How do we interpret failures and file an item? Where do we track bugs?
 
-1. Run the main test file
+1. Where is the main test file?
 2. Test names reflect what failed and why
-3. More details available in a log somewhere
+3. More details available in a [log somewhere](#records)
 
 ## Records
 
-A table of the current "health" state of the project's components at different times.
+A table of the "health records" of the project's components
 
 |Date         |Metric 1 | Metric 2  |
 |-            |-        |-          |
@@ -71,7 +75,9 @@ A table of the current "health" state of the project's components at different t
 |2023-07-15   |Blue     |85%        |
 |-            |-        |-          |
 
-Make a new table for different components, large metric changes, etc. At least some of the metrics should be related to the outcomes of suites of unit tests.
+Make a different table for different components, new tables for large metric changes, etc...
+
+At least some of the metrics should be related to the outcomes of suites of unit tests.
 
 |Date         |Metric A | Metric B  |
 |-            |-        |-          |
