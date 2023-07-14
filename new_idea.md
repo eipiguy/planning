@@ -3,21 +3,35 @@ author: eipiguy
 project: planning
 title: Title
 tags: [log, readme, template]
+date: 2023-07-12
 ---
 
-## Summary
+## Current Intent
 
-What's the point? What are you trying to achieve?
+What's the idea? What are you currently trying to do?
+
+What are you trying to get out of the whole thing?
+
+What do you think it will take at the most general levels?
+
+### Record of Past Intents
+
+All things change, and all things in this document and its template will evolve over time.
 
 ## Influences
+
+You'll be reinventing the wheel if you don't go to the market and see what other people have already done.
 
 - A
 - B
 
-## Distinctions
+## Current Understandings
 
-- X
-- Y
+What do you think you know? What have you learned as you've been working? Current mental model doesn't have to be perfect, but it should be there. Refine rather than re-build.
+
+## Questions
+
+What do we want to figure out? What do we need to learn to continue working?
 
 ## Goals
 
@@ -32,14 +46,7 @@ This is an evolving list. It will change based on obstacles and requirements tha
 
 > Tasks age like milk, not like wine. Only plan what is necessary. "Pie in the sky" ideas go in separate documents.
 
-## Constraints
-
-For each [goal](#goals) there is probably a [constraint](#constraints) or two on it. Make another list of these so you know what you have to work with.
-
-- Main thing to be aware of
-  - There are always pieces to it
-  - More than one thing makes a list
-- Resource and time constraints are always good
+### Constraints?
 
 ## Method
 
@@ -53,10 +60,6 @@ flowchart LR
   C -->|Option 2| E[Result 2];
 ```
 
-## Metrics
-
-How do you know if you're accomplishing your [goals](#goals)? What [tests](#testing) will you use and how will you [grade](#records) them? Remember that grades are tied to [self-value](#goals), and should generally be mastery focused only (pass/fail, show you can **actually** do it in *some* setting). Avoid making prototyping a bad thing by down-grading it.
-
 ## Testing
 
 How do we run [tests](#testing)? How do we interpret failures and file an item? Where do we track bugs?
@@ -65,7 +68,7 @@ How do we run [tests](#testing)? How do we interpret failures and file an item? 
 2. Test names reflect what failed and why
 3. More details available in a [log somewhere](#records)
 
-## Records
+### Records
 
 A table of the "health records" of the project's components
 
@@ -73,14 +76,4 @@ A table of the "health records" of the project's components
 |-            |-        |-          |
 |2023-07-08   |Purple   |85%        |
 |2023-07-15   |Blue     |85%        |
-|-            |-        |-          |
-
-Make a different table for different components, new tables for large metric changes, etc...
-
-At least some of the metrics should be related to the outcomes of suites of unit tests.
-
-|Date         |Metric A | Metric B  |
-|-            |-        |-          |
-|2023-07-08   |Fish     |175        |
-|2023-07-15   |Steak    |-24        |
 |-            |-        |-          |
