@@ -3,7 +3,7 @@ author: eipiguy
 project: planning
 title: Title
 tags: [log, readme, template]
-date: 2023-07-12
+date: 2023-07-14
 ---
 
 ## Current Intent
@@ -60,13 +60,43 @@ flowchart LR
   C -->|Option 2| E[Result 2];
 ```
 
-## Testing
+## Metrics
 
-How do we run [tests](#testing)? How do we interpret failures and file an item? Where do we track bugs?
+Tests just pass or fail, but metrics are your details. Can you know what needs to be tested without first knowing what you care about? What are the parts of the project, and how do you measure each of them?
 
-1. Where is the main test file?
-2. Test names reflect what failed and why
-3. More details available in a [log somewhere](#records)
+| Metric \\ Cost  |  1  |  2  |  3  |
+|:---             |:---:|:---:|:---:|
+| Excitement      |  😄  |  🫤  |  😓  |
+| Cost            |  🥩  |  🍞  |  💍  |
+| Complexity      |  🐁  |  🐉  |  ☠️  |
+| Duration        |  🚀  |  ✈️  |  🚌  |
+| Maintenance     |  🎄  |  📆  |  ⏰  |
+
+- Excitement
+  1. 😄 smile = passionate
+  2. 🫤 face_with_diagonal_mouth = meh
+  3. 😓 sweat = chore
+- Cost
+  1. 🥩 cut_of_meat = profitable
+  2. 🍞 bread = cheap
+  3. 💍 ring = expensive
+- Complexity
+  1. 🐁 mouse2 = easy
+  2. 🐉 dragon = challenging
+  3. ☠️ skull_and_crossbones = extreme
+- Duration
+  1. 🚀 rocket = less than weeks up front
+  2. ✈️ airplane = months up front
+  3. 🚌 bus = years up front
+- Progress
+  1. ([rounded box]) = working deliverable
+  2. {{angled box}} = making progress
+  3. [square box] = new idea
+- Maintenance
+  1. 🎄 christmas_tree = up to yearly maintenance
+  2. 📆 calendar = monthly maintenance
+  3. ⏰ alarm_clock = more than weekly maintenance
+
 
 ### Records
 
@@ -77,3 +107,11 @@ A table of the "health records" of the project's components
 |2023-07-08   |Purple   |85%        |
 |2023-07-15   |Blue     |85%        |
 |-            |-        |-          |
+
+## Testing
+
+How do we run [tests](#testing)? Tests should just pass or fail. How do we interpret failures and file an item? Where do we track bugs?
+
+1. Where is the main test file?
+2. Test names reflect what failed and why
+3. More details available in a [log somewhere](#records)
