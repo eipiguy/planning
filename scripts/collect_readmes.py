@@ -2,7 +2,7 @@ import os
 from datetime import datetime
 from os import path
 import shutil
-from collector import *
+from src.collector import *
 
 this_dir = path.dirname( path.realpath( __file__ ) )
 project_dir = path.join( this_dir, '..', '..' )

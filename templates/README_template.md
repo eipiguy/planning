@@ -19,11 +19,9 @@ You'll be reinventing the wheel if you don't go to the market and see what other
 - A
 - B
 
-## Off Ramp
+## Off Ramp Goals
 
 What is the bare minimum it takes to have a "usable" result? Without an off ramp you're investing in a new lifestyle.
-
-## Goals
 
 First words, then lists, then diagrams. Think big and prune. Tasks are better than ideas.
 
@@ -32,6 +30,20 @@ First words, then lists, then diagrams. Think big and prune. Tasks are better th
   - [ ] More than one thing makes a list
 - [ ] Make a follow up task
 
-> *Tasks* age like milk, not like wine. Only schedule what is necessary. Ideas go in an "IDEAS.md" file, not the road-map. Select tasks from the pool of ideas.
+> Remember that *tasks* age like milk, not like wine.
 
-### Constraints?
+Only **schedule** what is necessary. Ideas go in an "IDEAS.md" file, not the road-map. *Then* select tasks from the pool of ideas.
+
+## Dependencies
+
+What technologies does this assume you have installed and how would other people find and install it?
+
+## Layout
+
+I just opened this folder; What is all of it? How are things laid out?
+
+## References
+
+If you need a thing go [to the source](src)!
+
+[src]: www.alwayslistyoursources.com

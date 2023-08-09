@@ -5,10 +5,20 @@ from filecmp import cmp
 
 from collector import *
 
+def cmp_lines(path_1, path_2):
+	l1 = l2 = True
+	with open(path_1, 'r') as f1, open(path_2, 'r') as f2:
+		while l1 and l2:
+			l1 = f1.readline()
+			l2 = f2.readline()
+			if l1 != l2:
+				return False
+	return True
+
 class TestCollectionMethods( unittest.TestCase ):
 
 	def setUp(self):
-		assets_dir_name = 'test_assets'
+		assets_dir_name = 'assets'
 		projects_dir_name = 'test_projects'
 		project_name = 'test_project_a'
 		readme_name = 'README.md'
@@ -68,7 +78,7 @@ class TestCollectionMethods( unittest.TestCase ):
 
 		# compare written data to baseline
 		baseline_file_path = self.baseline( 'test_writes_header_from_json', 'md' )
-		self.assertTrue( cmp( temp_file_path, baseline_file_path, shallow=False ) )
+		self.assertTrue( cmp_lines( temp_file_path, baseline_file_path ) )
 
 		# delete temp file
 		os.remove( temp_file_path )
@@ -102,11 +112,10 @@ class TestCollectionMethods( unittest.TestCase ):
 		test_header_content[ 'new' ] = 'are new values being added?'
 
 		write_header_values( test_readme_path, test_header_content )
-		self.assertTrue( cmp( test_readme_path, self.baseline( 'test_write_header_from_dict_final', 'md' ) ) )
+		self.assertTrue( cmp_lines( test_readme_path, self.baseline( 'test_write_header_from_dict_final', 'md' ) ) )
 
 		# delete temp file
 		os.remove( test_readme_path )
-
 
 if __name__ == '__main__':
 	unittest.main()
