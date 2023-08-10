@@ -19,6 +19,16 @@ You'll be reinventing the wheel if you don't go to the market and see what other
 - A
 - B
 
+## Method
+
+How does it actually work? Diagram or brief overview; save details for additional docs.
+
+```mermaid
+graph LR
+
+first["First This"]-->then(["Then this"])
+```
+
 ## Off Ramp Goals
 
 What is the bare minimum it takes to have a "usable" result? Without an off ramp you're investing in a new lifestyle.
