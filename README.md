@@ -61,20 +61,34 @@ subgraph templates
   log
 end
 
-portfolio-.-project
+subgraph project
+  records
+end
 
 project--->readme
 project--->metrics
 project--->log
 
-readme--->planning
-metrics--->planning
-log--->planning
+readme--->database
+metrics--->database
+log--->database
 
-planning--->templates
-planning--->diagram
-planning--->report
-planning--->website
+subgraph planning
+  scripts--->diagram
+  scripts--->status
+end
+
+database-.->scripts
+scripts--->templates
+diagram--->website
+report--->website
+
+subgraph website
+  devlog
+  report
+  portfolio
+  resume
+end
 ```
 
 ## Off Ramp Goals

@@ -12,6 +12,7 @@ project_collector = DocumentationCollector( project_dir )
 readme_dest = path.join( this_dir, 'readmes' )
 default_header_path = path.join( this_dir, 'default_header_info.json' )
 os.mkdir( readme_dest )
+
 for project in project_collector.project_dirs:
 	header_info = {}
 	header_info[ 'project' ] = project

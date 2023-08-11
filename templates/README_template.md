@@ -2,7 +2,9 @@
 author: eipiguy
 project: planning
 title: Title
-tags: [log, planning, template]
+requires: []
+used_by: []
+components: []
 date: 2023-07-24
 ---
 
@@ -25,8 +27,10 @@ How does it actually work? Diagram or brief overview; save details for additiona
 
 ```mermaid
 graph LR
-
-first["First This"]-->then(["Then this"])
+  A[Sharp Corner Box] -->|Arrow Text| B(Rounded Box);
+  B --> C{Decision Diamond};
+  C -->|Option 1| D[Result 1];
+  C -->|Option 2| E[Result 2];
 ```
 
 ## Off Ramp Goals
@@ -36,7 +40,7 @@ What is the bare minimum it takes to have a "usable" result? Without an off ramp
 First words, then lists, then diagrams. Think big and prune. Tasks are better than ideas.
 
 - [ ] Main thing to do
-  - [ ] There are always parts to it
+  - [x] There are always parts to it
   - [ ] More than one thing makes a list
 - [ ] Make a follow up task
 
@@ -51,6 +55,8 @@ What technologies does this assume you have installed and how would other people
 ## Layout
 
 I just opened this folder; What is all of it? How are things laid out?
+
+How do I build and run? How do I run unit tests or make changes? How do I file a bug report?
 
 ## References
 
