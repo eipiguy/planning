@@ -4,16 +4,7 @@ from os import path
 from filecmp import cmp
 
 from collector import *
-
-def cmp_lines(path_1, path_2):
-	l1 = l2 = True
-	with open(path_1, 'r') as f1, open(path_2, 'r') as f2:
-		while l1 and l2:
-			l1 = f1.readline()
-			l2 = f2.readline()
-			if l1 != l2:
-				return False
-	return True
+from tools import *
 
 class TestCollectionMethods( unittest.TestCase ):
 
@@ -116,6 +107,48 @@ class TestCollectionMethods( unittest.TestCase ):
 
 		# delete temp file
 		os.remove( test_readme_path )
+
+	def test_markdown_to_dict_depth( self ):
+		test_readme_path = self.baseline( 'test_markdown_to_dict_depth', 'md' )
+		test_dict = markdown_to_dict( test_readme_path )
+		baseline_dict = {
+			'Heading 2': [ 0, 2, 'Content for heading 2\n'],
+			'Subheading 2.1': [ 1, 3, 'Content for subheading 2.1\n'],
+			'Heading 1': [ 2, 1, 'Content for heading 1\n'],
+			'Subheading 1.1': [ 3, 4, 'Content for subheading 1.1\n\n'],
+		}
+		self.assertDictEqual( test_dict, baseline_dict )
+
+	def test_markdown_to_dict_nohash( self ):
+		test_readme_path = self.baseline( 'test_markdown_to_dict_nohash', 'md' )
+		test_dict = markdown_to_dict( test_readme_path )
+		baseline_dict = {}
+		self.assertDictEqual( test_dict, baseline_dict )
+
+	def test_markdown_to_dict_nokey( self ):
+		test_readme_path = self.baseline( 'test_markdown_to_dict_nokey', 'md' )
+		test_dict = markdown_to_dict( test_readme_path )
+		baseline_dict = {}
+		self.assertDictEqual( test_dict, baseline_dict )
+
+	def test_markdown_to_dict_multiline( self ):
+		test_readme_path = self.baseline( 'test_markdown_to_dict_multiline', 'md' )
+		test_dict = markdown_to_dict( test_readme_path )
+		baseline_dict = {
+			'Heading 1': [ 0, 1, "\nContent for heading 1\n\n" ],
+			'Subheading 1.1': [ 1, 2, "\nContent for subheading 1.1\n\n" ]
+		}
+		self.assertDictEqual( test_dict, baseline_dict )
+
+	def test_markdown_to_dict_hashcontent( self ):
+		test_readme_path = self.baseline( 'test_markdown_to_dict_hashcontent', 'md' )
+		test_dict = markdown_to_dict( test_readme_path )
+		baseline_dict = {
+			'Heading 1': [ 0, 1, "Content for #heading 1\n" ],
+			'Subheading 1.1': [ 1, 2, "Content for subheading 1.1 with #\n" ],
+			'Heading 2': [ 2, 1, "Content for heading 2\n\n" ]
+		}
+		self.assertDictEqual( test_dict, baseline_dict )
 
 if __name__ == '__main__':
 	unittest.main()

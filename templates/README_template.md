@@ -4,7 +4,6 @@ project: planning
 title: Title
 requires: []
 used_by: []
-components: []
 date: 2023-07-24
 ---
 
@@ -21,6 +20,13 @@ You'll be reinventing the wheel if you don't go to the market and see what other
 - A
 - B
 
+## Resources
+
+Influence is one thing. You've got to start somewhere, hopefully a few somewheres, each of them workable. You get more results faster by refactoring rather than starting over.
+
+- C
+- D
+
 ## Method
 
 How does it actually work? Diagram or brief overview; save details for additional docs.
@@ -33,20 +39,28 @@ graph LR
   C -->|Option 2| E[Result 2];
 ```
 
-## Off Ramp Goals
+## Goals
 
 What is the bare minimum it takes to have a "usable" result? Without an off ramp you're investing in a new lifestyle.
 
-First words, then lists, then diagrams. Think big and prune. Tasks are better than ideas.
+First words, then lists, then diagrams. Think big and prune. Actionable tasks are better than goals.
 
 - [ ] Main thing to do
   - [x] There are always parts to it
   - [ ] More than one thing makes a list
 - [ ] Make a follow up task
 
+## Plans
+
 > Remember that *tasks* age like milk, not like wine.
 
 Only **schedule** what is necessary. Ideas go in an "IDEAS.md" file, not the road-map. *Then* select tasks from the pool of ideas.
+
+## Testing
+
+How do you know how well it's going? How do you know where you left off? How do you know if you broke something that used to work fine?
+
+You can't see everything all at once: make unit tests or you'll be in trouble when you come back after a hiatus.
 
 ## Dependencies
 

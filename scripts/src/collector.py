@@ -4,6 +4,9 @@ from os import path
 class DocumentationCollector:
 
 	def __init__( self, project_root_dir = 'portfolio', readme_name = 'README.md' ):
+		self.this_dir = path.dirname( path.realpath( __file__ ) )
+		self.template_dir = path.join( self.this_dir, '..', '..', 'templates' )
+
 		self.project_root_dir = project_root_dir
 		self.readme_name = readme_name
 		self.project_dirs = self.find_readme_dirs()
@@ -20,11 +23,51 @@ class DocumentationCollector:
 						readme_paths[ root_dir ] = project_dir
 		return readme_paths
 
+	def parse_headers( self ):
+		self.headers = {}
+		for project in self.project_dirs:
+			self.headers[project] = parse_header_from_readme( self.get_readme_path(project) )
+
+	def get_readme_path( self, project ):
+		return path.join( self.project_dirs[project], self.readme_name )
+
 def parse_main_hash_title( readme_path ):
 	with open( readme_path, 'r' ) as file:
 		for line in file:
 			if line[:2] == '# ':
 				return line[2:].strip()
+
+def num_initial_hashes( string ):
+	num_hashes = 0
+	for letter in string:
+		if letter == '#':
+			num_hashes += 1
+		else:
+			break
+	return num_hashes
+
+def markdown_to_dict( file_path ):
+	file_dict = {}
+	key = ""
+	content = ""
+	order = 0
+	depth = 0
+	with open( file_path, 'r' ) as file:
+		for line in file:
+			if line[0] == '#':
+				if key != "":
+					file_dict[key] = [ order, depth, content ]
+					order += 1
+
+				depth = num_initial_hashes( line )
+				key = line[depth:].strip()
+				content = ""
+			else:
+				content += line
+		content += '\n'
+		if key != "":
+			file_dict[key] = [ order, depth, content ]
+	return file_dict
 
 def parse_header_from_readme( readme_path ):
 	header_info = {}
@@ -46,13 +89,13 @@ def write_header_to_json( readme_path, json_path ):
 	with open( json_path, 'w+' ) as file:
 		json.dump(header_info, file)
 
-def write_header_values( file_path, header_dict ):
+def write_header_values( readme_path, header_dict ):
 	lines = []
 	has_header = False
-	if path.isfile( file_path ):
-		with open( file_path, 'r' ) as file:
+	if path.isfile( readme_path ):
+		with open( readme_path, 'r' ) as file:
 			lines = file.readlines()
-	with open( file_path, 'w+' ) as file:
+	with open( readme_path, 'w+' ) as file:
 		is_header = False
 		used_keys = set()
 		for line in lines:
@@ -79,7 +122,7 @@ def write_header_values( file_path, header_dict ):
 				file.write( line )
 	
 	if not has_header:
-		with open( file_path, 'w+' ) as file:
+		with open( readme_path, 'w+' ) as file:
 			file.write( '---\n' )
 			for key in header_dict:
 				file.write( f"{ key }: { header_dict[ key ] }\n" )
