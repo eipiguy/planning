@@ -37,7 +37,7 @@ class TestCollectionMethods( unittest.TestCase ):
 		self.assertIn( test_project_name, self.doc_collector.find_readme_dirs() )
 
 	def test_parse_header_from_readme( self ):
-		test_header_info = parse_header_from_readme( self.test_readme_path )
+		test_header_info = parse_header( self.test_readme_path )
 
 		with open( self.baseline( 'test_parse_header_from_readme' ) ) as file:
 			baseline_header_info = json.load( file )
@@ -65,7 +65,7 @@ class TestCollectionMethods( unittest.TestCase ):
 		
 		# test readme to compare to written result
 		temp_file_path = self.baseline( 'test_writes_header_from_json_temp', 'md' )
-		write_header_from_json( json_header_path, temp_file_path )
+		write_json_to_header( json_header_path, temp_file_path )
 
 		# compare written data to baseline
 		baseline_file_path = self.baseline( 'test_writes_header_from_json', 'md' )
@@ -83,12 +83,12 @@ class TestCollectionMethods( unittest.TestCase ):
 		test_copy_path = path.join( self.test_dir, 'test_readme.md' )
 		copy2( self.test_readme_path, test_copy_path )
 
-		init_header_info = parse_header_from_readme( test_copy_path )
+		init_header_info = parse_header( test_copy_path )
 		main_hash_title = parse_main_hash_title( test_copy_path )
 		self.assertNotEqual( init_header_info['title'], main_hash_title )
 
 		write_hash_title_to_header( test_copy_path )
-		final_header_info = parse_header_from_readme( test_copy_path )
+		final_header_info = parse_header( test_copy_path )
 		self.assertEqual( final_header_info['title'], main_hash_title )
 
 		# delete temp file
@@ -102,7 +102,7 @@ class TestCollectionMethods( unittest.TestCase ):
 		test_header_content[ 'test' ] = 'overwriting content'
 		test_header_content[ 'new' ] = 'are new values being added?'
 
-		write_header_values( test_readme_path, test_header_content )
+		write_header_from_dict( test_header_content, test_readme_path )
 		self.assertTrue( cmp_lines( test_readme_path, self.baseline( 'test_write_header_from_dict_final', 'md' ) ) )
 
 		# delete temp file
@@ -112,10 +112,22 @@ class TestCollectionMethods( unittest.TestCase ):
 		test_readme_path = self.baseline( 'test_markdown_to_dict_depth', 'md' )
 		test_dict = markdown_to_dict( test_readme_path )
 		baseline_dict = {
-			'Heading 2': [ 0, 2, 'Content for heading 2\n'],
-			'Subheading 2.1': [ 1, 3, 'Content for subheading 2.1\n'],
-			'Heading 1': [ 2, 1, 'Content for heading 1\n'],
-			'Subheading 1.1': [ 3, 4, 'Content for subheading 1.1\n\n'],
+			'Heading 2': {
+				'content': 'Content for heading 2\n',
+				'children': {
+					'Subheading 2.1': {
+						'content': 'Content for subheading 2.1\n'
+					}
+				}
+			},
+			'Heading 1': {
+				'content': 'Content for heading 1\n',
+				'children': {
+					'Subheading 1.1': {
+						'content': 'Content for subheading 1.1\n\n'
+					}
+				}
+			}
 		}
 		self.assertDictEqual( test_dict, baseline_dict )
 
@@ -135,18 +147,32 @@ class TestCollectionMethods( unittest.TestCase ):
 		test_readme_path = self.baseline( 'test_markdown_to_dict_multiline', 'md' )
 		test_dict = markdown_to_dict( test_readme_path )
 		baseline_dict = {
-			'Heading 1': [ 0, 1, "\nContent for heading 1\n\n" ],
-			'Subheading 1.1': [ 1, 2, "\nContent for subheading 1.1\n\n" ]
+			'Heading 1': {
+				'content': '\nContent for heading 1\n\n',
+				'children': {
+					'Subheading 1.1': {
+						'content': '\nContent for subheading 1.1\n\n'
+					}
+				}
+			}
 		}
-		self.assertDictEqual( test_dict, baseline_dict )
+	self.assertDictEqual( test_dict, baseline_dict )
 
 	def test_markdown_to_dict_hashcontent( self ):
 		test_readme_path = self.baseline( 'test_markdown_to_dict_hashcontent', 'md' )
 		test_dict = markdown_to_dict( test_readme_path )
 		baseline_dict = {
-			'Heading 1': [ 0, 1, "Content for #heading 1\n" ],
-			'Subheading 1.1': [ 1, 2, "Content for subheading 1.1 with #\n" ],
-			'Heading 2': [ 2, 1, "Content for heading 2\n\n" ]
+			'Heading 1': {
+				'content': 'Content for #heading 1\n',
+				'children': {
+					'Subheading 1.1': {
+						'content': 'Content for subheading 1.1 with #\n'
+					}
+				}
+			},
+			'Heading 2': {
+				'content': 'Content for heading 2\n\n'
+			}
 		}
 		self.assertDictEqual( test_dict, baseline_dict )
 

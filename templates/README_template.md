@@ -1,11 +1,4 @@
----
-author: eipiguy
-project: planning
-title: Title
-requires: []
-used_by: []
-date: 2023-07-24
----
+# Project Title
 
 All things change, and all things in this document and its template will evolve over time. Keep records when things go unexpectedly.
 
