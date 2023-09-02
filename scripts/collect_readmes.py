@@ -12,17 +12,14 @@ data_dir = path.join( this_dir, '..', 'data' )
 project_collector = DocumentationCollector( portfolio_dir )
 
 readme_dest = path.join( data_dir, 'readmes' )
-os.mkdir( readme_dest )
+if not path.exists(readme_dest):
+	os.mkdir( readme_dest )
+project_collector.update_readmes( readme_dest )
 
 default_header_path = path.join( template_dir, 'default_header_info.json' )
 for project in project_collector.project_dirs:
 	print( f"{ project }: { project_collector.project_dirs[ project ] }" )
 	destination_path = path.join( readme_dest, f"{project}.md" )
-	shutil.copy2(
-		path.join(
-			project_collector.project_dirs[ project ],
-			project_collector.readme_name ),
-		destination_path )
 
 	header_info = {}
 	header_info[ 'dir_name' ] = project

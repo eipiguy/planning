@@ -148,33 +148,81 @@ class TestCollectionMethods( unittest.TestCase ):
 		test_dict = markdown_to_dict( test_readme_path )
 		baseline_dict = {
 			'Heading 1': {
-				'content': '\nContent for heading 1\n\n',
-				'children': {
-					'Subheading 1.1': {
-						'content': '\nContent for subheading 1.1\n\n'
-					}
-				}
+				'content': '\nContent for heading 1\n\n'
+			},
+			'Subheading 1.1': {
+				'content': '\nContent for subheading 1.1\n\n'
 			}
 		}
-	self.assertDictEqual( test_dict, baseline_dict )
+		self.assertDictEqual( test_dict, baseline_dict )
 
 	def test_markdown_to_dict_hashcontent( self ):
 		test_readme_path = self.baseline( 'test_markdown_to_dict_hashcontent', 'md' )
 		test_dict = markdown_to_dict( test_readme_path )
 		baseline_dict = {
 			'Heading 1': {
-				'content': 'Content for #heading 1\n',
-				'children': {
-					'Subheading 1.1': {
-						'content': 'Content for subheading 1.1 with #\n'
-					}
-				}
+				'content': 'Content for #heading 1\n'
+			},
+			'Subheading 1.1': {
+				'content': 'Content for subheading 1.1 with #\n'
 			},
 			'Heading 2': {
 				'content': 'Content for heading 2\n\n'
 			}
 		}
 		self.assertDictEqual( test_dict, baseline_dict )
+
+class TestDictToMarkdown(unittest.TestCase):
+
+	def test_empty_dict(self):
+		nested_dict = {}
+		expected_markdown = ""
+		self.assertEqual(dict_to_markdown(nested_dict), expected_markdown)
+
+	def test_single_section(self):
+		nested_dict = {'Section 1': {'content': 'Content for section 1\n'}}
+		expected_markdown = "# Section 1\nContent for section 1\n\n"
+		self.assertEqual(dict_to_markdown(nested_dict), expected_markdown)
+
+	def test_nested_sections(self):
+		nested_dict = {
+			'Section 1': {'content': 'Content for section 1\n'},
+			'Section 2': {
+				'content': 'Content for section 2\n',
+				'children': {
+					'Subsection 1': {'content': 'Content for subsection 1\n'},
+					'Subsection 2': {'content': 'Content for subsection 2\n'}
+				}
+			}
+		}
+		expected_markdown = (
+			"# Section 1\nContent for section 1\n\n"
+			"# Section 2\nContent for section 2\n\n"
+			"## Subsection 1\nContent for subsection 1\n\n"
+			"## Subsection 2\nContent for subsection 2\n\n"
+		)
+		self.assertEqual(dict_to_markdown(nested_dict), expected_markdown)
+
+	def test_consecutive_newlines(self):
+		nested_dict = {'Section 1': {'content': 'Line 1\n\nLine 2\n'}}
+		expected_markdown = "# Section 1\nLine 1\n\nLine 2\n\n"
+		self.assertEqual(dict_to_markdown(nested_dict), expected_markdown)
+
+	def test_deeply_nested_sections(self):
+		nested_dict = {'Section 1': {
+			'content': 'Content for section 1\n',
+			'children': {'Subsection 1': {
+				'content': 'Content for subsection 1\n',
+				'children': {'Subsubsection 1': {'content': 'Content for subsubsection 1\n'}}
+			}}
+		}}
+		expected_markdown = (
+			"# Section 1\nContent for section 1\n\n"
+			"## Subsection 1\nContent for subsection 1\n\n"
+			"### Subsubsection 1\nContent for subsubsection 1\n\n"
+		)
+		self.assertEqual(dict_to_markdown(nested_dict), expected_markdown)
+
 
 if __name__ == '__main__':
 	unittest.main()

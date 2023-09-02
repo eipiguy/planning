@@ -36,38 +36,31 @@ class DocumentationCollector:
 	def get_readme_data( self, project ):
 		return markdown_to_dict( self.get_readme_path( project ) )
 
-	def get_template_data( self, template = README_NAME ):
-		template_path = path.join( self.template_dir, template )
-		return markdown_to_dict( template_path )
+	def get_template_data( self, template = 'README' ):
+		return markdown_to_dict( path.join( self.template_dir, template + '_template.md' ) )
 
-	def update_readmes( self ):
+	def update_readmes( self, summary_dir ):
 		template_data = self.get_template_data()
 		for project in self.project_dirs:
 			readme_data = self.get_readme_data( project )
+			unique_data = {}
 
 			# Update readme to match template:
 
 			# For each template section,
 			# search for the corresponding readme section
-			# and move it to the correct order and depth
-			cur_order = 0
-			new_sections = 0
-			updated_data = {}
-			for template_section in template_data:
-				if ( template_section in readme_data ):
-					template_section_data = template_data[ template_section ]
-					updated_data[ template_section ] = [
-						template_section_data[0],
-						template_section_data[1],
-						readme_data[ template_section ] ]
+			for section in template_data:
+				# If the section doesn't exist,
+				# add it with default data
+				if not section in readme_data:
+					readme_data[section] = template_data[section].copy()
+				elif readme_data[section]['content'] != template_data[section]['content']:
+					unique_data[section] = readme_data[section].copy()
 
-
-			# If the section doesn't exist,
-			# add it in the correct place with default data
-			
-			# Any "extra" sections that aren't in the template
-			# should be moved with their parent section if it is moved
-			# and otherwise left where they are
+			with open( self.get_readme_path( project ), 'w+' ) as file:
+				file.write( dict_to_markdown( readme_data, 2 ) )
+			with open( path.join( summary_dir, project+'.md'), 'w+' ) as file:
+				file.write( dict_to_markdown( unique_data, 2 ) )
 
 def parse_main_hash_title( file_path ):
 	with open( file_path, 'r' ) as file:
@@ -84,14 +77,27 @@ def num_initial_hashes( string ):
 			break
 	return num_hashes
 
+def dict_to_markdown(nested_dict, depth=1):
+	markdown_text = ""
+	for key, value in nested_dict.items():
+		content = value['content']
+		children = value.get('children', {})
+
+		markdown_text += "#" * depth + " " + key + "\n"
+		markdown_text += content
+		markdown_text += dict_to_markdown(children, depth + 1)
+	return markdown_text
+
 def markdown_to_dict( file_path ):
 	section_list = get_section_list( file_path )
 
 	# work from max depth backwards to build nested list
 	nesting_level = calculate_max_depth( section_list )
-	while nesting_level > 0:
+	while nesting_level > 2:
 		# look through list for any sections at the current nesting level
-		for i,section in enumerate(section_list):
+		i = 0
+		while i < len(section_list):
+			section = section_list[i]
 			if( not 'children' in section_list[i] ):
 				section_list[i]['children'] = {}
 			if( section['depth'] == nesting_level ):
@@ -105,6 +111,8 @@ def markdown_to_dict( file_path ):
 					if( section['children'] != {} ):
 						section_list[parent_id]['children'][ section['key'] ]['children'] = section['children'].copy()
 					del section_list[i]
+					continue
+			i += 1
 
 		# decrease the nesting level
 		nesting_level -= 1
@@ -114,7 +122,7 @@ def markdown_to_dict( file_path ):
 		nested_dict[ section['key'] ] = {
 			'content': section['content'],
 		}
-		if( section['children'] != {} ):
+		if( 'children' in section and section['children'] != {} ):
 			nested_dict[ section['key'] ]['children'] = section['children'].copy()
 	return nested_dict
 
@@ -166,7 +174,6 @@ def get_section_list( file_path ):
 				content = ""
 			else:
 				content += line
-		content += '\n'
 		if key != "":
 			section_list.append( {
 				'depth': depth,
@@ -243,3 +250,6 @@ def write_json_to_header( json_path, file_path ):
 def write_hash_title_to_header( file_path ):
 	hash_title = parse_main_hash_title( file_path )
 	write_header_from_dict( { 'title': hash_title }, file_path )
+
+if __name__ == '__main__':
+	unittest.main()

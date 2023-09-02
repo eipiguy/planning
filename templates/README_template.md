@@ -1,8 +1,4 @@
-# Project Title
-
-All things change, and all things in this document and its template will evolve over time. Keep records when things go unexpectedly.
-
-## Current Intent
+## Intent
 
 What's the idea? What are you currently trying to do? What are you trying to get out of the whole thing?
 
